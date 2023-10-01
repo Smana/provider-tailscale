@@ -1,9 +1,95 @@
-name: hashicorp/null
+name: tailscale/tailscale
 resources:
-    null_resource Resource - terraform-provider-null:
+    tailscale_acl Resource - terraform-provider-tailscale:
         subCategory: ""
-        description: The null_resource resource implements the standard resource lifecycle but takes no further action. The triggers argument allows specifying an arbitrary set of values that, when changed, will cause the resource to be replaced.
-        name: null_resource Resource - terraform-provider-null
-        title: null_resource Resource - terraform-provider-null
-        argumentDocs: {}
+        description: The acl resource allows you to configure a Tailscale ACL. See https://tailscale.com/kb/1018/acls for more information. Note that this resource will completely overwrite existing ACL contents for a given tailnet.
+        name: tailscale_acl Resource - terraform-provider-tailscale
+        title: tailscale_acl Resource - terraform-provider-tailscale
+        argumentDocs:
+            acl: (String) The JSON-based policy that defines which devices and users are allowed to connect in your network
+            id: (String) The ID of this resource.
+        importStatements: []
+    tailscale_device_authorization Resource - terraform-provider-tailscale:
+        subCategory: ""
+        description: The device_authorization resource is used to approve new devices before they can join the tailnet. See https://tailscale.com/kb/1099/device-authorization/ for more details.
+        name: tailscale_device_authorization Resource - terraform-provider-tailscale
+        title: tailscale_device_authorization Resource - terraform-provider-tailscale
+        argumentDocs:
+            authorized: (Boolean) Whether or not the device is authorized
+            device_id: (String) The device to set as authorized
+            id: (String) The ID of this resource.
+        importStatements: []
+    tailscale_device_key Resource - terraform-provider-tailscale:
+        subCategory: ""
+        description: The device_key resource allows you to update the properties of a device's key
+        name: tailscale_device_key Resource - terraform-provider-tailscale
+        title: tailscale_device_key Resource - terraform-provider-tailscale
+        argumentDocs:
+            device_id: (String) The device to update the key properties of
+            id: (String) The ID of this resource.
+            key_expiry_disabled: (Boolean) Determines whether or not the device's key will expire
+        importStatements: []
+    tailscale_device_subnet_routes Resource - terraform-provider-tailscale:
+        subCategory: ""
+        description: The devicesubnetroutes resource allows you to configure subnet routes for your Tailscale devices. See https://tailscale.com/kb/1019/subnets for more information.
+        name: tailscale_device_subnet_routes Resource - terraform-provider-tailscale
+        title: tailscale_device_subnet_routes Resource - terraform-provider-tailscale
+        argumentDocs:
+            device_id: (String) The device to set subnet routes for
+            id: (String) The ID of this resource.
+            routes: (Set of String) The subnet routes that are enabled to be routed by a device
+        importStatements: []
+    tailscale_device_tags Resource - terraform-provider-tailscale:
+        subCategory: ""
+        description: The device_tags resource is used to apply tags to Tailscale devices. See https://tailscale.com/kb/1068/acl-tags/ for more details.
+        name: tailscale_device_tags Resource - terraform-provider-tailscale
+        title: tailscale_device_tags Resource - terraform-provider-tailscale
+        argumentDocs:
+            device_id: (String) The device to set tags for
+            id: (String) The ID of this resource.
+            tags: (Set of String) The tags to apply to the device
+        importStatements: []
+    tailscale_dns_nameservers Resource - terraform-provider-tailscale:
+        subCategory: ""
+        description: The dns_nameservers resource allows you to configure DNS nameservers for your Tailscale network. See https://tailscale.com/kb/1054/dns for more information.
+        name: tailscale_dns_nameservers Resource - terraform-provider-tailscale
+        title: tailscale_dns_nameservers Resource - terraform-provider-tailscale
+        argumentDocs:
+            id: (String) The ID of this resource.
+            nameservers: (List of String) Devices on your network will use these nameservers to resolve DNS names. IPv4 or IPv6 addresses are accepted.
+        importStatements: []
+    tailscale_dns_preferences Resource - terraform-provider-tailscale:
+        subCategory: ""
+        description: The dns_preferences resource allows you to configure DNS preferences for your Tailscale network. See https://tailscale.com/kb/1054/dns for more information.
+        name: tailscale_dns_preferences Resource - terraform-provider-tailscale
+        title: tailscale_dns_preferences Resource - terraform-provider-tailscale
+        argumentDocs:
+            id: (String) The ID of this resource.
+            magic_dns: (Boolean) Whether or not to enable magic DNS
+        importStatements: []
+    tailscale_dns_search_paths Resource - terraform-provider-tailscale:
+        subCategory: ""
+        description: The dns_nameservers resource allows you to configure DNS nameservers for your Tailscale network. See https://tailscale.com/kb/1054/dns for more information.
+        name: tailscale_dns_search_paths Resource - terraform-provider-tailscale
+        title: tailscale_dns_search_paths Resource - terraform-provider-tailscale
+        argumentDocs:
+            id: (String) The ID of this resource.
+            search_paths: (List of String) Devices on your network will use these domain suffixes to resolve DNS names.
+        importStatements: []
+    tailscale_tailnet_key Resource - terraform-provider-tailscale:
+        subCategory: ""
+        description: The tailnet_key resource allows you to create pre-authentication keys that can register new nodes without needing to sign in via a web browser. See https://tailscale.com/kb/1085/auth-keys for more information
+        name: tailscale_tailnet_key Resource - terraform-provider-tailscale
+        title: tailscale_tailnet_key Resource - terraform-provider-tailscale
+        argumentDocs:
+            created_at: (String) The creation timestamp of the key in RFC3339 format
+            description: (String) A description of the key consisting of alphanumeric characters.
+            ephemeral: (Boolean) Indicates if the key is ephemeral.
+            expires_at: (String) The expiry timestamp of the key in RFC3339 format
+            expiry: (Number) The expiry of the key in seconds
+            id: (String) The ID of this resource.
+            key: (String, Sensitive) The authentication key
+            preauthorized: (Boolean) Determines whether or not the machines authenticated by the key will be authorized for the tailnet by default.
+            reusable: (Boolean) Indicates if the key is reusable or single-use.
+            tags: (Set of String) List of tags to apply to the machines authenticated by the key.
         importStatements: []

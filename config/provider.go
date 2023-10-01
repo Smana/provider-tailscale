@@ -10,12 +10,20 @@ import (
 
 	ujconfig "github.com/upbound/upjet/pkg/config"
 
-	"github.com/upbound/upjet-provider-template/config/null"
+	"github.com/Smana/provider-tailscale/config/acl"
+	"github.com/Smana/provider-tailscale/config/deviceauthorization"
+	"github.com/Smana/provider-tailscale/config/devicekey"
+	"github.com/Smana/provider-tailscale/config/devicesubnetroutes"
+	"github.com/Smana/provider-tailscale/config/devicetags"
+	"github.com/Smana/provider-tailscale/config/dnsnameservers"
+	"github.com/Smana/provider-tailscale/config/dnspreferences"
+	"github.com/Smana/provider-tailscale/config/dnssearchpaths"
+	"github.com/Smana/provider-tailscale/config/tailnetkey"
 )
 
 const (
-	resourcePrefix = "template"
-	modulePath     = "github.com/upbound/upjet-provider-template"
+	resourcePrefix = "tailscale"
+	modulePath     = "github.com/Smana/provider-tailscale"
 )
 
 //go:embed schema.json
@@ -27,7 +35,7 @@ var providerMetadata string
 // GetProvider returns provider configuration
 func GetProvider() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
-		ujconfig.WithRootGroup("template.upbound.io"),
+		ujconfig.WithRootGroup("crossplane.io"),
 		ujconfig.WithIncludeList(ExternalNameConfigured()),
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithDefaultResourceOptions(
@@ -36,7 +44,15 @@ func GetProvider() *ujconfig.Provider {
 
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
-		null.Configure,
+		acl.Configure,
+		deviceauthorization.Configure,
+		devicekey.Configure,
+		devicesubnetroutes.Configure,
+		devicetags.Configure,
+		dnsnameservers.Configure,
+		dnspreferences.Configure,
+		dnssearchpaths.Configure,
+		tailnetkey.Configure,
 	} {
 		configure(pc)
 	}

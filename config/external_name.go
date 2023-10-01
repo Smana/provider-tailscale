@@ -10,7 +10,16 @@ import "github.com/upbound/upjet/pkg/config"
 // provider.
 var ExternalNameConfigs = map[string]config.ExternalName{
 	// Import requires using a randomly generated ID from provider: nl-2e21sda
-	"null_resource": config.IdentifierFromProvider,
+	"tailscale_acl":                  config.IdentifierFromProvider,
+	"tailscale_device":               config.IdentifierFromProvider,
+	"tailscale_device_authorization": config.IdentifierFromProvider,
+	"tailscale_device_key":           config.IdentifierFromProvider,
+	"tailscale_device_subnet_routes": config.IdentifierFromProvider,
+	"tailscale_device_tags":          config.IdentifierFromProvider,
+	"tailscale_dns_nameservers":      config.IdentifierFromProvider,
+	"tailscale_dns_preferences":      config.IdentifierFromProvider,
+	"tailscale_dns_search_paths":     config.IdentifierFromProvider,
+	"tailscale_tailnet_key":          config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
